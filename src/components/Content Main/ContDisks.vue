@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" v-if="loading != true">
     <Disk
       v-for="disk in disks.response"
       :key="disk.id"
@@ -8,6 +8,9 @@
       :autore="disk.author"
       :anno="disk.year"
     />
+  </div>
+  <div v-else>
+    <p class="loading">Loading...</p>
   </div>
 </template>
 
@@ -20,6 +23,7 @@ export default {
   data() {
     return {
       disks: [],
+      loading: true,
     };
   },
   mounted() {
@@ -29,6 +33,7 @@ export default {
         console.log(r.data);
 
         this.disks = r.data;
+        this.loading = false;
       })
       .catch((e) => {
         console.log(e, "ops");
@@ -49,5 +54,12 @@ export default {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
+}
+
+.loading {
+  color: #fff;
+  font-size: 50px;
+  text-align: center;
+  padding: 100px 0;
 }
 </style>
