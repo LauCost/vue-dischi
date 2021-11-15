@@ -9,24 +9,12 @@
 import Footer from "./components/Footer.vue";
 import Main from "./components/Main.vue";
 
-/* import axios from "axios"; */
 export default {
   name: "App",
   components: {
     Footer,
     Main,
   },
-
-  /* mounted() {
-    axios
-      .get("https://flynn.boolean.careers/exercises/api/array/music")
-      .then((r) => {
-        console.log(r);
-      })
-      .catch((e) => {
-        console.log(e, "ops");
-      });
-  }, */
 };
 </script>
 
