@@ -4,6 +4,10 @@
       <img :src="image" alt="" />
     </div>
     <h2>{{ titolo }}</h2>
+    <p>
+      {{ autore }} <br />
+      {{ anno }}
+    </p>
   </div>
 </template>
 
@@ -13,6 +17,8 @@ export default {
   props: {
     image: String,
     titolo: String,
+    autore: String,
+    anno: String,
   },
 };
 </script> 
@@ -29,6 +35,14 @@ export default {
     text-align: center;
     width: 60%;
     margin: auto;
+  }
+
+  p {
+    width: 80%;
+    margin: 25px auto;
+    color: #808080;
+    text-align: center;
+    font-size: 25px;
   }
 }
 

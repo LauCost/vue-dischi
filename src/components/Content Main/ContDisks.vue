@@ -1,15 +1,13 @@
 <template>
   <div class="container">
     <Disk
-      v-for="disco in disks.response"
-      :key="disco.id"
-      :image="disco.poster"
-      :titolo="disco.title.toUpperCase()"
+      v-for="disk in disks.response"
+      :key="disk.id"
+      :image="disk.poster"
+      :titolo="disk.title.toUpperCase()"
+      :autore="disk.author"
+      :anno="disk.year"
     />
-    <!-- <div v-for="disk in disks" :key="disk.id">
-      <img :src="disk.poster" alt="" />
-      <h2>{{ disk.title }}</h2>
-    </div> -->
   </div>
 </template>
 
@@ -46,7 +44,7 @@ export default {
 
 <style lang="scss">
 .container {
-  padding-top: 150px;
+  padding: 120px 0;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
