@@ -1,6 +1,6 @@
 <template>
   <div>
-    <FilterGenre @filter-genre="filter" />
+    <FilterGenre @filter-genre="filterDisk" />
     <div class="container" v-if="loading != true">
       <Disk
         v-for="disk in disks.response"
@@ -31,17 +31,7 @@ export default {
     };
   },
   mounted() {
-    axios
-      .get("https://flynn.boolean.careers/exercises/api/array/music")
-      .then((r) => {
-        /* console.log(r.data); */
-
-        this.disks = r.data;
-        this.loading = false;
-      })
-      .catch((e) => {
-        console.log(e, "ops");
-      });
+    this.callApi();
   },
 
   components: {
@@ -50,14 +40,28 @@ export default {
   },
 
   methods: {
-    filter(genere) {
+    filterDisk(genere) {
       console.log(genere);
 
-      const filteredElement = this.disks.response.filter((disco) =>
-        disco.genre.includes(genere)
-      );
-
+      const filteredElement = this.disks.response.filter((disco) => {
+        return disco.genre.includes(genere);
+      });
       console.log(filteredElement);
+      this.disks.response = filteredElement;
+    },
+
+    callApi() {
+      axios
+        .get("https://flynn.boolean.careers/exercises/api/array/music")
+        .then((r) => {
+          /* console.log(r.data); */
+
+          this.disks = r.data;
+          this.loading = false;
+        })
+        .catch((e) => {
+          console.log(e, "ops");
+        });
     },
   },
 };
