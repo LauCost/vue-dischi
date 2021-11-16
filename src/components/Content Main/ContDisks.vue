@@ -1,16 +1,19 @@
 <template>
-  <div class="container" v-if="loading != true">
-    <Disk
-      v-for="disk in disks.response"
-      :key="disk.id"
-      :image="disk.poster"
-      :titolo="disk.title.toUpperCase()"
-      :autore="disk.author"
-      :anno="disk.year"
-    />
-  </div>
-  <div v-else>
-    <p class="loading">Loading...</p>
+  <div>
+    <FilterGenre @filter-genre="filter" />
+    <div class="container" v-if="loading != true">
+      <Disk
+        v-for="disk in disks.response"
+        :key="disk.id"
+        :image="disk.poster"
+        :titolo="disk.title.toUpperCase()"
+        :autore="disk.author"
+        :anno="disk.year"
+      />
+    </div>
+    <div v-else>
+      <p class="loading">Loading...</p>
+    </div>
   </div>
 </template>
 
@@ -18,6 +21,7 @@
 <script>
 import axios from "axios";
 import Disk from "./Disk.vue";
+import FilterGenre from "./MusicGenreFilter.vue";
 
 export default {
   data() {
@@ -30,7 +34,7 @@ export default {
     axios
       .get("https://flynn.boolean.careers/exercises/api/array/music")
       .then((r) => {
-        console.log(r.data);
+        /* console.log(r.data); */
 
         this.disks = r.data;
         this.loading = false;
@@ -42,6 +46,19 @@ export default {
 
   components: {
     Disk,
+    FilterGenre,
+  },
+
+  methods: {
+    filter(genere) {
+      console.log(genere);
+
+      const filteredElement = this.disks.response.filter((disco) =>
+        disco.genre.includes(genere)
+      );
+
+      console.log(filteredElement);
+    },
   },
 };
 </script>
