@@ -3,7 +3,7 @@
     <FilterGenre @filter-genre="filterDisk" />
     <div class="container" v-if="loading != true">
       <Disk
-        v-for="disk in disks.response"
+        v-for="disk in getFilteredDisks"
         :key="disk.id"
         :image="disk.poster"
         :titolo="disk.title.toUpperCase()"
@@ -28,10 +28,21 @@ export default {
     return {
       disks: [],
       loading: true,
+      filterSelected: "",
     };
   },
   mounted() {
-    this.callApi();
+    axios
+      .get("https://flynn.boolean.careers/exercises/api/array/music")
+      .then((r) => {
+        /* console.log(r.data); */
+
+        this.disks = r.data;
+        this.loading = false;
+      })
+      .catch((e) => {
+        console.log(e, "ops");
+      });
   },
 
   components: {
@@ -41,27 +52,23 @@ export default {
 
   methods: {
     filterDisk(genere) {
-      console.log(genere);
+      /* console.log(genere); */
+
+      this.filterSelected = genere;
+    },
+  },
+
+  computed: {
+    getFilteredDisks() {
+      if (this.filterSelected === "All") {
+        return this.disks.response;
+      }
 
       const filteredElement = this.disks.response.filter((disco) => {
-        return disco.genre.includes(genere);
+        return disco.genre.includes(this.filterSelected);
       });
-      console.log(filteredElement);
-      this.disks.response = filteredElement;
-    },
 
-    callApi() {
-      axios
-        .get("https://flynn.boolean.careers/exercises/api/array/music")
-        .then((r) => {
-          /* console.log(r.data); */
-
-          this.disks = r.data;
-          this.loading = false;
-        })
-        .catch((e) => {
-          console.log(e, "ops");
-        });
+      return filteredElement;
     },
   },
 };

@@ -16,5 +16,6 @@ export default {
 <style lang="scss">
 main {
   background-color: #1e2d3b;
+  min-height: calc(100vh - 82px);
 }
 </style>
